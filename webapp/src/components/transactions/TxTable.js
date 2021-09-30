@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { PropTypes, arrayOf, string, bool, number, shape } from 'prop-types'
+import { arrayOf, string, bool, number, shape } from 'prop-types'
 import GetTransactions from '../../gql/transactions.gql'
 import { css } from '@emotion/core'
 import AddIcon from '@material-ui/icons/Add'
@@ -14,6 +14,10 @@ const fragmentStyle = css`
   display: flex;
   flex-direction: column;
   position: relative;
+`
+
+const checkboxStyle = css`
+  text-align: right;
 `
 
 const styles = css`
@@ -72,11 +76,11 @@ const buttonStyle = css`
   background-color: #2374AB;
   border: none;
   color: white;
-  padding: 10px;
+  padding: 4px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 4px;
   margin: 4px 2px;
 `
 
@@ -90,7 +94,8 @@ const iconStyle = css`
 
 const headerStyle = css`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin-bottom: 0;
 `
 
 const creditStyle = css`
@@ -160,12 +165,17 @@ const convertToRoman = (num) => {
 }
 
 const TxTable = (props) => {
-  const { data, version } = props
+  const { data } = props
   const [editForm, setEditForm] = useState({})
   const [addModal, setAddModal] = useState(false)
   const [editModal, setEditModal] = useState(false)
   const [showDeleted, setShowDeleted] = useState(false)
   const [removeTransaction] = useMutation(RemoveTransaction)
+  const [currencyType, setCurrencyType] = useState(true)
+
+  const onChange = () => {
+    setCurrencyType(!currencyType)
+  }
 
   const showAddModal = () => {
     setAddModal(true)
@@ -239,7 +249,7 @@ const TxTable = (props) => {
                         <td data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
                         <td css={debitStyle} data-testid={makeDataTestId(id, 'debit')}>{(debit && <CheckIcon />)}</td>
                         <td css={creditStyle} data-testid={makeDataTestId(id, 'credit')}>{(credit && <CheckIcon />)}</td>
-                        <td css={(debit) ? debitStyle : creditStyle} data-testid={makeDataTestId(id, 'amount')}>{(version === 'roman') ? convertToRoman(Math.round(amount)) : amount}</td>
+                        <td css={(debit) ? debitStyle : creditStyle} data-testid={makeDataTestId(id, 'amount')}>{(!currencyType) ? convertToRoman(Math.round(amount)) : amount}</td>
                         <td>
                           <button onClick={() => showEditModal(id, userId, description, merchantId, debit, credit, amount)}>
                             <EditIcon />
@@ -254,6 +264,14 @@ const TxTable = (props) => {
             </table>
           </div>
         )}
+      <div css={checkboxStyle} onChange={onChange}>
+        <input
+          name='currency'
+          type='checkbox'
+          value='roman'
+        />
+          View as Roman Numerals
+      </div>
     </div>
   )
 }
@@ -269,6 +287,5 @@ TxTable.propTypes = {
     debit: bool,
     credit: bool,
     amount: number
-  })),
-  version: PropTypes.string.isRequired
+  }))
 }

@@ -6,11 +6,14 @@ import GetTransactions from '../../gql/transactions.gql'
 
 const containerStyle = css`
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100vh;
 `
 
 const headerStyle = css`
-  text-align: center;
+  text-align: right;
 `
 
 export function Charts () {
@@ -26,7 +29,7 @@ export function Charts () {
   if (error) {
     return (
       <Fragment>
-        ¯\_(ツ)_/¯
+        There was an error fetching the data
       </Fragment>
     )
   }
