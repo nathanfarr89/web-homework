@@ -20,6 +20,16 @@ const checkboxStyle = css`
   text-align: right;
 `
 
+const filterStyle = css`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+
+  & > label {
+    margin-right: 5px;
+  }
+`
+
 const styles = css`
   font-family: "Times New Roman", Times, serif;
   max-height: 70vh;
@@ -166,6 +176,7 @@ const convertToRoman = (num) => {
 
 const TxTable = (props) => {
   const { data } = props
+  const [displayData, setDisplayData] = useState(data)
   const [editForm, setEditForm] = useState({})
   const [addModal, setAddModal] = useState(false)
   const [editModal, setEditModal] = useState(false)
@@ -175,6 +186,15 @@ const TxTable = (props) => {
 
   const onChange = () => {
     setCurrencyType(!currencyType)
+  }
+
+  const filterByValue = (array, string) => {
+    return array.filter(o =>
+      Object.keys(o).some(k => o[k].toString().toLowerCase().includes(string.toLowerCase())))
+  }
+
+  const filter = (e) => {
+    setDisplayData(filterByValue(data, e.target.value))
   }
 
   const showAddModal = () => {
@@ -203,6 +223,18 @@ const TxTable = (props) => {
         Company Expenses
         <button css={buttonStyle} onClick={showAddModal}><AddIcon /></button>
       </h1>
+      <div css={filterStyle}>
+        <label htmlFor='header-search'>
+          <span>Filter Transactions</span>
+        </label>
+        <input
+          id='header-search'
+          name='s'
+          onChange={filter}
+          placeholder='Filter...'
+          type='text'
+        />
+      </div>
       {(data.length === 0) &&
         (
           <div>
@@ -239,7 +271,7 @@ const TxTable = (props) => {
               </thead>
               <tbody>
                 {
-                  data.map(tx => {
+                  displayData.map(tx => {
                     const { id, user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
                     return (
                       <tr data-testid={`transaction-${id}`} key={`transaction-${id}`}>

@@ -36,7 +36,7 @@ const AppRouter = () => {
             Expense Breakdown
           </Link>
           <button
-            css={buttonStyle}
+            css={[buttonStyle, uploadStyle]}
             onClick={() => setShowUpload(!showUpload)}
           >
             <PublishIcon fontSize='small' />
@@ -68,12 +68,26 @@ const containerStyle = css`
   background-color: #f8f9fa;
 `
 
+const uploadStyle = css`
+  all: unset;
+  color: #333;
+  display: flex;
+  text-decoration: none;
+  margin-bottom: 20px;
+  padding: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`
+
 const sidebarStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #edf2ff;
+  background-color: #e7f5ff;
   height: 100vh;
+  width: 15%;
 `
 const headerStyle = css`
   display: flex;
