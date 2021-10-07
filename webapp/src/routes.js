@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { css } from '@emotion/core'
-import { Base, Home } from './home'
+import { Home } from './home'
 import NewTx from './components/transactions/NewTx'
 import EditTx from './components/transactions/EditTx'
 import { Charts } from './components/transactions/Charts'
@@ -49,7 +49,7 @@ const AppRouter = () => {
           <Route component={NewTx} exact path='/transaction/new' />
           <Route component={EditTx} exact path='/transaction/edit/:id/:userId/:description/:merchantId/:debit/:credit/:amount' />
           <Route component={Home} exact path='/transactions/:version' />
-          <Route component={Base} exact path='/' />
+          <Route component={Home} exact path='/' />
         </div>
         {showUpload && <Upload close={setShowUpload} />}
       </div>

@@ -14,62 +14,6 @@ const AddTransaction = gql`
       }
     }
   `
-const style = css`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 10px;
-`
-const button = css`
-  border-radius: 8px;
-  background-color: #2374AB;
-  border: none;
-  color: white;
-  padding: 6px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  margin: 4px 2px;
-  width: 30%;
-`
-const browse = css`
-  background-color: #fff;
-  border-radius: 8px;
-  border-width: thin;
-  border-style: solid;
-  border-color: #2374AB;
-  line-height: 2.5;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  padding-left: 13px;
-  padding-top: 3px;
-  width: 250px;
-`
-const containerStyle = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  left: 0; right: 0;
-  position: absolute;
-  background: #fff;
-  margin: auto;
-  margin-top: 250px;
-  width: 500px;
-  border: 1px solid #2374AB;
-  border-radius: 1em;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-`
-const headerStyle = css`
-  display: flex;
-  justify-content: flex-start;
-  margin: 5px;
-`
-const closeStyle = css`
-    margin-left: auto;
-    margin-right: 10px;
-    margin-top: 5px;
-`
 
 const Upload = (props) => {
   const { close } = props
@@ -142,3 +86,60 @@ export default Upload
 Upload.propTypes = {
   close: PropTypes.func.isRequired
 }
+
+const style = css`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+`
+const button = css`
+  border-radius: 8px;
+  background-color: #2374AB;
+  border: none;
+  color: white;
+  padding: 6px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  width: 30%;
+`
+const browse = css`
+  background-color: #fff;
+  border-radius: 8px;
+  border-width: thin;
+  border-style: solid;
+  border-color: #2374AB;
+  line-height: 2.5;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding-left: 13px;
+  padding-top: 3px;
+  width: 250px;
+`
+const containerStyle = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  left: 0; right: 0;
+  position: absolute;
+  background: #fff;
+  margin: auto;
+  margin-top: 250px;
+  width: 500px;
+  border: 1px solid #2374AB;
+  border-radius: 1em;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+`
+const headerStyle = css`
+  display: flex;
+  justify-content: flex-start;
+  margin: 5px;
+`
+const closeStyle = css`
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 5px;
+`

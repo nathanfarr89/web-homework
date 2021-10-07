@@ -21,7 +21,7 @@ export function Home (props) {
   if (error) {
     return (
       <Fragment>
-        ¯\_(ツ)_/¯
+        Error loading application. Please try again.
       </Fragment>
     )
   }

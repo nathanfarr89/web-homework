@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { arrayOf, string, bool, number, shape } from 'prop-types'
 import GetTransactions from '../../gql/transactions.gql'
 import { css } from '@emotion/core'
@@ -23,6 +23,7 @@ const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionI
 
 const TxTable = (props) => {
   const { data } = props
+  console.log('data', data)
   const [displayData, setDisplayData] = useState(data)
   const [editForm, setEditForm] = useState({})
   const [addModal, setAddModal] = useState(false)
@@ -54,6 +55,10 @@ const TxTable = (props) => {
     removeTransaction({ variables: { id }, refetchQueries: [{ query: GetTransactions }] })
     setShowDeleted(true)
   }
+
+  useEffect(() => {
+    setDisplayData(data)
+  }, [data])
 
   return (
     <div css={fragmentStyle} data-testid={'tx-table'}>
