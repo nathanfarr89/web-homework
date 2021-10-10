@@ -1,6 +1,8 @@
 const graphql = require('graphql')
 const TransactionType = require('./transaction-type')
 const Transactions = require('../query-resolvers/transaction-resolvers.js')
+const UserType = require('./user-type')
+const Users = require('../query-resolvers/user-resolvers.js')
 
 const {
   GraphQLBoolean,
@@ -33,6 +35,29 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve (parentValue, args) {
         return Transactions.find(args)
+      }
+    },
+    user: {
+      type: UserType,
+      args: {
+        id: { type: GraphQLString }
+      },
+      resolve (parentValue, args) {
+        return Users.findOne(args.id)
+      }
+    },
+    users: {
+      type: GraphQLList(UserType),
+      args: {
+        firstName: { type: GraphQLString },
+        lastName: { type: GraphQLString },
+        dob: { type: GraphQLString },
+        employeeNumber: { type: GraphQLString },
+        tenure: { type: GraphQLString },
+        budget: { type: GraphQLString }
+      },
+      resolve (parentValue, args) {
+        return Users.find(args)
       }
     }
   })

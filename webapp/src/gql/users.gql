@@ -1,0 +1,18 @@
+query GetUsers {
+    users {
+        id
+        firstName
+        lastName
+        dob
+        employeeNumber
+        tenure
+        budget
+        transactions {
+            description
+            merchant_id
+            debit
+            credit
+            amount
+        }
+    }
+}

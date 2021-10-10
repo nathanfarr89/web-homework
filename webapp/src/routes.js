@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { css } from '@emotion/core'
 import { Home } from './home'
 import NewTx from './components/transactions/NewTx'
 import EditTx from './components/transactions/EditTx'
 import { Charts } from './components/transactions/Charts'
 import Upload from './components/transactions/Upload'
+import Employees from './components/employees/Employees'
 import ReceiptIcon from '@material-ui/icons/Receipt'
+import PeopleIcon from '@material-ui/icons/People'
 import PieChartIcon from '@material-ui/icons/PieChart'
 import PublishIcon from '@material-ui/icons/Publish'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
+import { buttonContainer, buttonStyle, containerStyle, contentStyle, headerStyle, iconStyle, sidebarStyle, uploadStyle } from './styles'
 
 const AppRouter = () => {
   const [showUpload, setShowUpload] = useState(false)
@@ -25,26 +27,42 @@ const AppRouter = () => {
             css={buttonStyle}
             to='/transactions/standard'
           >
-            <ReceiptIcon fontSize='small' />
-            Company Expenses
+            <div css={buttonContainer}>
+              <ReceiptIcon css={iconStyle} fontSize='small' />
+              Company Expenses
+            </div>
           </Link>
           <Link
             css={buttonStyle}
             to='/charts'
           >
-            <PieChartIcon fontSize='small' />
-            Expense Breakdown
+            <div css={buttonContainer}>
+              <PieChartIcon css={iconStyle} fontSize='small' />
+              Expense Breakdown
+            </div>
+          </Link>
+          <Link
+            css={buttonStyle}
+            to='/employees'
+          >
+            <div css={buttonContainer}>
+              <PeopleIcon css={iconStyle} fontSize='small' />
+              Employee Directory
+            </div>
           </Link>
           <button
             css={[buttonStyle, uploadStyle]}
             onClick={() => setShowUpload(!showUpload)}
           >
-            <PublishIcon fontSize='small' />
-            Upload CSV
+            <div css={buttonContainer}>
+              <PublishIcon css={iconStyle} fontSize='small' />
+              Upload CSV
+            </div>
           </button>
         </div>
         <div css={contentStyle}>
           <Route component={Charts} exact path='/charts' />
+          <Route component={Employees} exact path='/employees' />
           <Route component={Upload} exact path='/upload' />
           <Route component={NewTx} exact path='/transaction/new' />
           <Route component={EditTx} exact path='/transaction/edit/:id/:userId/:description/:merchantId/:debit/:credit/:amount' />
@@ -58,45 +76,3 @@ const AppRouter = () => {
 }
 
 export default AppRouter
-
-const contentStyle = css`
-  height: 100vh;
-  margin-left: 10%;
-`
-const containerStyle = css`
-  display: flex;
-  background-color: #f8f9fa;
-`
-
-const uploadStyle = css`
-  all: unset;
-  color: #333;
-  display: flex;
-  text-decoration: none;
-  margin-bottom: 20px;
-  padding: 10px;
-
-  &:hover {
-    cursor: pointer;
-  }
-`
-
-const sidebarStyle = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #e7f5ff;
-  height: 100vh;
-  width: 15%;
-`
-const headerStyle = css`
-  display: flex;
-  justify-content: space-evenly;
-`
-const buttonStyle = css`
-  color: #333;
-  display: flex;
-  text-decoration: none;
-  margin-bottom: 20px;
-  padding: 10px;
-`

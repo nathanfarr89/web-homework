@@ -4,6 +4,7 @@ import { gql, useMutation } from '@apollo/client'
 import { css } from '@emotion/core'
 import { Redirect } from 'react-router-dom'
 import GetTransactions from '../../gql/transactions.gql'
+import { debitCreditStyle, formStyle } from '../../styles'
 
 const AddTransaction = gql`
     mutation AddTransaction($user_id: String, $description: String, $merchant_id: String, $debit: Boolean, $credit: Boolean, $amount: Float) {
@@ -86,64 +87,3 @@ export default NewTx
 NewTx.propTypes = {
   setAddModal: PropTypes.func.isRequired
 }
-
-const formStyle = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  left: 0; right: 0;
-  position: absolute;
-  background: #fff;
-  margin: auto;
-  margin-top: 50px;
-  width: 500px;
-  padding: 1em;
-  border: 1px solid #2374AB;
-  border-radius: 1em;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-
-  & > ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  & > ul > li + li {
-    margin-top: 1em;
-  }
-
-  & > ul > li > label {
-    display: inline-block;
-    width: 90px;
-    text-align: right;
-  }
-
-  & > ul > li > input { 
-    font: 1em sans-serif;
-    width: 300px;
-    box-sizing: border-box;
-    border: 1px solid #999;
-  }
-
-  & > input:focus {
-    border-color: #000;
-  }
-
-  & > ul > li > button {
-    margin-left: 6.7em;
-  }
-`
-
-const debitCreditStyle = css`
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  margin-left: 2em;
-
-  & > li > label {
-    margin-left: 1em;
-  }
-`

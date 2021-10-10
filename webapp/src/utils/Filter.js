@@ -1,6 +1,6 @@
 import React from 'react'
-import { css } from '@emotion/core'
 import PropTypes from 'prop-types'
+import { filterStyle } from '../styles'
 
 const Filter = (props) => {
   const { data, setDisplayData } = props
@@ -36,13 +36,3 @@ Filter.propTypes = {
   data: PropTypes.instanceOf(Object).isRequired,
   setDisplayData: PropTypes.func.isRequired
 }
-
-const filterStyle = css`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-
-  & > label {
-    margin-right: 5px;
-  }
-`

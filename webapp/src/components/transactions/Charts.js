@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
-import { css } from '@emotion/core'
 import Chart from 'react-google-charts'
 import { useQuery } from '@apollo/client'
 import GetTransactions from '../../gql/transactions.gql'
+import { chartsContainerStyle, chartsHeaderStyle, warningStyle } from '../../styles'
 
 export function Charts () {
   const { loading, error, data = {} } = useQuery(GetTransactions)
+  console.log('chart data', data)
 
   if (loading) {
     return (
@@ -20,6 +21,14 @@ export function Charts () {
       <Fragment>
         There was an error fetching the data
       </Fragment>
+    )
+  }
+
+  if (data.transactions.length === 0) {
+    return (
+      <div>
+        <h2 css={warningStyle}>No Transactions Found. Please seed the database with upload function and the databaseSeed.csv file</h2>
+      </div>
     )
   }
 
@@ -61,9 +70,9 @@ export function Charts () {
   const charts = [descriptionChartData, employeeChartData, merchantChartData]
 
   return (
-    <Fragment>
-      <h1 css={headerStyle}>Expense Breakdown</h1>
-      <div css={containerStyle}>
+    <div>
+      <h1 css={chartsHeaderStyle}>Expense Breakdown</h1>
+      <div css={chartsContainerStyle}>
         {charts.map(chart => {
           return (
             <Chart
@@ -82,18 +91,6 @@ export function Charts () {
           )
         })}
       </div>
-    </Fragment>
+    </div>
   )
 }
-
-const containerStyle = css`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  height: 100vh;
-`
-
-const headerStyle = css`
-  text-align: right;
-`
