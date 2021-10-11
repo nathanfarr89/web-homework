@@ -1,9 +1,11 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { gql, useMutation } from '@apollo/client'
+import { gql, useMutation, useQuery } from '@apollo/client'
 import GetTransactions from '../../gql/transactions.gql'
+import GetUsers from '../../gql/users.gql'
 import { Redirect } from 'react-router-dom'
-import { debitCreditStyle, formStyle, editHeaderStyle } from '../../styles'
+import { formStyle, editHeaderStyle, inputStyle, txLiStyle, txUlstyle } from '../../styles'
 
 const EditTransaction = gql`
     mutation EditTransaction($id: String, $user_id: String, $description: String, $merchant_id: String, $debit: Boolean, $credit: Boolean, $amount: Float) {
@@ -21,6 +23,8 @@ const EditTransaction = gql`
 
 const EditTx = (props) => {
   const { editForm, setEditModal } = props
+  const { data = {} } = useQuery(GetUsers)
+  const [options, setOptions] = useState([])
   const [formValues, setFormValues] = useState({
     id: '',
     userId: '',
@@ -29,6 +33,7 @@ const EditTx = (props) => {
     txType: 'debit',
     amount: 0
   })
+  console.log('formVals', formValues)
   const [redirect, setRedirect] = useState(false)
   const [editTransaction] = useMutation(EditTransaction)
 
@@ -37,6 +42,13 @@ const EditTx = (props) => {
     setEditModal(false)
     editTransaction({ variables: { 'id': formValues.id, 'user_id': formValues.userId, 'description': formValues.description, 'merchant_id': formValues.merchantId, 'debit': (formValues.txType === 'debit'), 'credit': (formValues.txType === 'credit'), 'amount': formValues.amount }, refetchQueries: [{ query: GetTransactions }] }).then(() => setRedirect(true))
   }
+
+  useEffect(() => {
+    if (data.users) {
+      setFormValues({ ...formValues, userId: data.users[0].employeeNumber })
+      setOptions(data.users.map(user => user.employeeNumber))
+    }
+  }, [data])
 
   useEffect(() => {
     const { id, userId, description, merchantId, debit, amount } = editForm
@@ -58,34 +70,35 @@ const EditTx = (props) => {
     <div>
       <form css={formStyle} onSubmit={onSubmit}>
         <h3 css={editHeaderStyle}>Edit Transaction</h3>
-        <ul>
-          <li>
+        <ul css={txUlstyle}>
+          <li css={txLiStyle}>
             <label htmlFor='userId'>User ID:</label>
-            <input name='userId' onChange={event => setFormValues({ ...formValues, userId: event.target.value })} value={formValues.userId} />
+            <select name='userId' onChange={event => setFormValues({ ...formValues, userId: event.target.value })}>
+              {options.map(option => {
+                return <option selected={(formValues.userId === option)} key={option}>{option}</option>
+              })}
+            </select>
           </li>
-          <li>
+          <li css={txLiStyle}>
             <label htmlFor='description'>Description:</label>
-            <input name='description' onChange={event => setFormValues({ ...formValues, description: event.target.value })} value={formValues.description} />
+            <input css={inputStyle} name='description' onChange={event => setFormValues({ ...formValues, description: event.target.value })} value={formValues.description} />
           </li>
-          <li>
+          <li css={txLiStyle}>
             <label htmlFor='merchant_id'>Merchant:</label>
-            <input name='merchantId' onChange={event => setFormValues({ ...formValues, merchantId: event.target.value })} value={formValues.merchantId} />
+            <input css={inputStyle} name='merchantId' onChange={event => setFormValues({ ...formValues, merchantId: event.target.value })} value={formValues.merchantId} />
           </li>
-          <div css={debitCreditStyle}>
-            <li>
-              <label htmlFor='debit'>Debit:</label>
-              <input checked={(formValues.txType === 'debit')} id='debit' name='type' onChange={event => setFormValues({ ...formValues, txType: event.target.value })} type='radio' value='debit' />
-            </li>
-            <li>
-              <label htmlFor='credit'>Credit:</label>
-              <input checked={(formValues.txType === 'credit')} id='credit' name='type' onChange={event => setFormValues({ ...formValues, txType: event.target.value })} type='radio' value='credit' />
-            </li>
-          </div>
-          <li>
+          <li css={txLiStyle}>
+            <label htmlFor='Transaction Type'>Transaction:</label>
+            <select name='Transaction Type' onChange={event => setFormValues({ ...formValues, txType: event.target.value })}>
+              <option selected={(formValues.txType === 'debit')} value='debit' >Debit</option>
+              <option selected={(formValues.txType === 'credit')} value='credit' >Credit</option>
+            </select>
+          </li>
+          <li css={txLiStyle}>
             <label htmlFor='amount'>Amount:</label>
-            <input name='amount' onChange={event => setFormValues({ ...formValues, amount: Number(event.target.value) })} type='number' value={formValues.amount} />
+            <input css={inputStyle} name='amount' onChange={event => setFormValues({ ...formValues, amount: Number(event.target.value) })} type='number' value={formValues.amount} />
           </li>
-          <li>
+          <li css={txLiStyle}>
             <button type='submit'>Submit</button>
             <button onClick={() => setEditModal(false)}>Cancel</button>
           </li>

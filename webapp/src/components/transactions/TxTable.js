@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { arrayOf, string, bool, number, shape } from 'prop-types'
 import GetTransactions from '../../gql/transactions.gql'
+import GetUsers from '../../gql/users.gql'
 import AddIcon from '@material-ui/icons/Add'
 import CheckIcon from '@material-ui/icons/Check'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import EditIcon from '@material-ui/icons/Edit'
-import { gql, useMutation } from '@apollo/client'
+import { gql, useMutation, useQuery } from '@apollo/client'
 import NewTx from './NewTx'
 import EditTx from './EditTx'
 import { Filter, RomanConversion } from '../../utils'
-import { alert, alertSucces, alertFailure, closeBtn, checkboxStyle, creditStyle, debitStyle, fragmentStyle, styles, tableButtonStyle, tableContainerStyle, tableHeaderStyle, tableIconStyle, warningStyle } from '../../styles'
+import { alert, alertSuccess, alertFailure, closeBtn, checkboxStyle, creditStyle, debitStyle, disableTableButtonStyle, enableTableButtonStyle, fragmentStyle, styles, tableButtonStyle, tableContainerStyle, tableHeaderStyle, tableIconStyle, warningStyle } from '../../styles'
 
 export const RemoveTransaction = gql`
     mutation RemoveTransaction($id: String) {
@@ -23,8 +24,9 @@ const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionI
 
 const TxTable = (props) => {
   const { data } = props
+  const userData = useQuery(GetUsers)
+  console.log(userData)
   const [displayData, setDisplayData] = useState(data)
-  console.log('displayData', displayData)
   const [editForm, setEditForm] = useState({})
   const [addModal, setAddModal] = useState(false)
   const [editModal, setEditModal] = useState(false)
@@ -63,7 +65,7 @@ const TxTable = (props) => {
     }
   }, [data])
 
-  if (data.length === 0) {
+  if (!userData.data || data.length === 0) {
     return (
       <div>
         <h2 css={warningStyle}>No Transactions Found. Please seed the database with upload function and the databaseSeed.csv file</h2>
@@ -75,12 +77,12 @@ const TxTable = (props) => {
     <div css={fragmentStyle} data-testid={'tx-table'}>
       <h1 css={tableHeaderStyle}>
         Company Expenses
-        <button css={tableButtonStyle} onClick={showAddModal}><AddIcon /></button>
+        <button css={[tableButtonStyle, (userData.data.users.length > 0) ? enableTableButtonStyle : disableTableButtonStyle]} onClick={showAddModal}><AddIcon /></button>
       </h1>
       <Filter data={data} setDisplayData={setDisplayData} />
       {showDeleted &&
         (
-          <div css={[alert, alertSucces]}>
+          <div css={[alert, alertSuccess]}>
             <span css={closeBtn} onClick={() => setShowDeleted(false)} onKeyDown={() => setShowDeleted(false)} role='button' tabIndex={0}>&times;</span>
             Sucessfully Deleted
           </div>
@@ -93,8 +95,15 @@ const TxTable = (props) => {
           </div>
         )
       }
-      {addModal && <NewTx setAddModal={setAddModal} />}
-      {editModal && <EditTx editForm={editForm} setEditModal={setEditModal} />}
+      {userData.data.users.length === 0 &&
+        (
+          <div css={[alert, alertFailure]}>
+            Please upload employeeSeed.csv to add and edit transactions
+          </div>
+        )
+      }
+      {(addModal && userData.data.users.length > 0) && <NewTx setAddModal={setAddModal} />}
+      {(editModal && userData.data.users.length > 0) && <EditTx editForm={editForm} setEditModal={setEditModal} />}
       {(displayData.length > 0) &&
         (
           <div>
@@ -128,7 +137,7 @@ const TxTable = (props) => {
                           <td css={(debit) ? debitStyle : creditStyle} data-testid={makeDataTestId(id, 'amount')}>{(!currencyType) ? RomanConversion(Math.round(amount)) : amount}</td>
                           <td>
                             <button onClick={() => showEditModal(id, userId, description, merchantId, debit, credit, amount)}>
-                              <EditIcon />
+                              {(userData.data.users.length > 0) ? <EditIcon /> : <span>N/A</span>}
                             </button>
                           </td>
                           <td><button css={tableIconStyle} data-testid={`delete-${id}`} onClick={() => onTxDelete(id)}><DeleteForeverIcon /></button></td>

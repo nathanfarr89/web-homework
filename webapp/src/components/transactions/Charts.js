@@ -6,7 +6,6 @@ import { chartsContainerStyle, chartsHeaderStyle, warningStyle } from '../../sty
 
 export function Charts () {
   const { loading, error, data = {} } = useQuery(GetTransactions)
-  console.log('chart data', data)
 
   if (loading) {
     return (

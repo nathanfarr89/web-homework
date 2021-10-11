@@ -37,6 +37,19 @@ export const headerStyle = css`
   display: flex;
   justify-content: space-evenly;
 `
+export const txUlstyle = css`
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+`
+export const txLiStyle = css`
+  display: flex;
+  justify-content: space-between;
+`
+export const inputStyle = css`
+  width: 50% !important;
+`
+
 export const buttonContainer = css`
   display: flex;
   align-items: center;
@@ -121,7 +134,6 @@ export const tableContainerStyle = css`
 
 export const tableButtonStyle = css`
   border-radius: 8px;
-  background-color: #2374AB;
   border: none;
   color: white;
   padding: 4px;
@@ -130,6 +142,14 @@ export const tableButtonStyle = css`
   display: inline-block;
   font-size: 4px;
   margin: 4px 2px;
+`
+
+export const enableTableButtonStyle = css`
+  background-color: #2374AB;
+`
+
+export const disableTableButtonStyle = css`
+  background-color: #e9ecef;
 `
 
 export const tableIconStyle = css`
@@ -159,7 +179,7 @@ export const alert = css`
   color: white;
   margin-bottom: 15px;
 `
-export const alertSucces = css`
+export const alertSuccess = css`
   background-color: #20c997;
 `
 export const alertFailure = css`
@@ -186,7 +206,7 @@ export const warningStyle = css`
 
 export const chartsContainerStyle = css`
   display: flex;
-  flex-direction: column;
+  overflow: hidden;
   flex-wrap: wrap;
   justify-content: center;
   height: 90vh;
@@ -355,6 +375,7 @@ export const employeeCard = css`
   flex-direction: column;
   max-height: 70vh;
   width: 40%;
+  overflow: hidden;
 
 `
 
@@ -367,6 +388,7 @@ export const employee = css`
   background-color: #f1f3f5;
   border-radius: 5px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  margin-left: 20px;
 `
 export const profilePic = css`
   border-radius: 50%;
