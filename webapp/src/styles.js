@@ -1,5 +1,13 @@
 import { css } from '@emotion/core'
 
+// Colors
+const white = '#fff'
+const lightGrey = '#e7f5ff'
+const blue = `#2374AB`
+const red = '#A31300'
+const green = '#20c997'
+const lightBlue = '#a5d8ff'
+
 // Base.js styles
 
 export const baseContainerStyle = css`
@@ -15,7 +23,7 @@ export const sidebarStyle = css`
 display: flex;
 flex-direction: column;
 justify-content: center;
-background-color: #e7f5ff;
+background-color: ${lightGrey};
 height: 100vh;
 width: 15%;
 `
@@ -103,14 +111,14 @@ export const styles = css`
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 
   & > thead > tr > th {
-    background: #2374AB;
+    background: ${blue};
     position: sticky;
     top: 0;
   }
 
   & > thead > tr {
-    background-color: #2374AB;
-    color: #ffffff;
+    background-color: ${blue};
+    color: ${white};
     text-align: left;
   }
 
@@ -128,11 +136,11 @@ export const styles = css`
   }
 
   & > tbody > tr:last-of-type {
-    border-bottom: 2px solid #2374AB;
+    border-bottom: 2px solid ${blue};
   }
 
   & > tbody > tr > td > button {
-    color: #2374AB;
+    color: ${blue};
   }
 `
 
@@ -155,7 +163,7 @@ export const tableButtonStyle = css`
 `
 
 export const enableTableButtonStyle = css`
-  background-color: #2374AB;
+  background-color: ${blue};
 `
 
 export const disableTableButtonStyle = css`
@@ -164,7 +172,7 @@ export const disableTableButtonStyle = css`
 
 export const tableIconStyle = css`
  cursor: pointer;
- color: #2374AB;
+ color: ${blue};
  & > a {
    text-decoration: none;
  }
@@ -177,11 +185,11 @@ export const tableHeaderStyle = css`
 `
 
 export const creditStyle = css`
-  color: #A31300;
+  color: ${red};
 `
 
 export const debitStyle = css`
- color: #20c997;
+ color: ${green};
 `
 export const alert = css`
   margin-top: 10px;
@@ -190,10 +198,10 @@ export const alert = css`
   margin-bottom: 15px;
 `
 export const alertSuccess = css`
-  background-color: #20c997;
+  background-color: ${green};
 `
 export const alertFailure = css`
-  background-color: #A31300;
+  background-color: ${red};
 `
 
 export const closeBtn = css`
@@ -209,7 +217,7 @@ export const closeBtn = css`
 
 export const warningStyle = css`
  text-align: center;
- color: #A31300;
+ color: ${red};
 `
 
 // Charts.js style
@@ -236,12 +244,12 @@ export const formStyle = css`
   text-align: center;
   left: 0; right: 0;
   position: absolute;
-  background: #fff;
+  background: ${white};
   margin: auto;
   margin-top: 50px;
   width: 500px;
   padding: 1em;
-  border: 1px solid #2374AB;
+  border: 1px solid ${blue};
   border-radius: 1em;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 
@@ -308,7 +316,7 @@ export const uploadFormStyle = css`
 `
 export const uploadButton = css`
   border-radius: 8px;
-  background-color: #2374AB;
+  background-color: ${blue};
   border: none;
   color: white;
   padding: 6px;
@@ -319,11 +327,11 @@ export const uploadButton = css`
   width: 30%;
 `
 export const uploadBrowse = css`
-  background-color: #fff;
+  background-color: ${white};
   border-radius: 8px;
   border-width: thin;
   border-style: solid;
-  border-color: #2374AB;
+  border-color: ${blue};
   line-height: 2.5;
   margin-top: 4px;
   margin-bottom: 4px;
@@ -339,11 +347,11 @@ export const uploadContainerStyle = css`
   text-align: center;
   left: 0; right: 0;
   position: absolute;
-  background: #fff;
+  background: ${white};
   margin: auto;
   margin-top: 250px;
   width: 500px;
-  border: 1px solid #2374AB;
+  border: 1px solid ${blue};
   border-radius: 1em;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 `
@@ -406,8 +414,8 @@ export const profilePic = css`
   width: 120px;
   text-align: center;
   line-height: 120px;
-  background: #e7f5ff;
-  border: 3px solid #a5d8ff;
+  background: ${lightGrey};
+  border: 3px solid ${lightBlue};
   letter-spacing: 2px;
   font-weight: 100;
   font-size: 40px;

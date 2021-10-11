@@ -1,7 +1,16 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
+import GetTransactions from '../gql/transactions.gql'
 import { baseContainerStyle } from '../styles'
 
 export function Base () {
+  const { data = {} } = useQuery(GetTransactions)
+
+  if (data.transactions.length > 0) {
+    return <Redirect to='/transactions/standard' />
+  }
+
   return (
     <div css={baseContainerStyle}>
       <h1>Company Expense Tracker</h1>

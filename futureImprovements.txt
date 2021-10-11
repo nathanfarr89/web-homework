@@ -1,0 +1,3 @@
+1. Close Upload/Add New/Edit modals when clicking outside of the modals
+2. Blur background when modals are open
+3. Loading spinners
