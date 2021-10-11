@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { Home } from './home'
+import { Base, Home } from './home'
 import NewTx from './components/transactions/NewTx'
 import EditTx from './components/transactions/EditTx'
 import { Charts } from './components/transactions/Charts'
@@ -21,7 +21,12 @@ const AppRouter = () => {
       <div css={containerStyle}>
         <div css={sidebarStyle}>
           <h1 css={headerStyle}>
-            <MonetizationOnIcon fontSize='large' />
+            <Link
+              css={buttonStyle}
+              to='/'
+            >
+              <MonetizationOnIcon fontSize='large' />
+            </Link>
           </h1>
           <Link
             css={buttonStyle}
@@ -67,7 +72,7 @@ const AppRouter = () => {
           <Route component={NewTx} exact path='/transaction/new' />
           <Route component={EditTx} exact path='/transaction/edit/:id/:userId/:description/:merchantId/:debit/:credit/:amount' />
           <Route component={Home} exact path='/transactions/:version' />
-          <Route component={Home} exact path='/' />
+          <Route component={Base} exact path='/' />
         </div>
         {showUpload && <Upload close={setShowUpload} />}
       </div>

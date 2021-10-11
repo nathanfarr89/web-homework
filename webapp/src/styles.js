@@ -1,5 +1,15 @@
 import { css } from '@emotion/core'
 
+// Base.js styles
+
+export const baseContainerStyle = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 70vh;
+  margin: auto;
+`
+
 // routes.js styles
 export const sidebarStyle = css`
 display: flex;

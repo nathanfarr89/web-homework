@@ -25,7 +25,7 @@ A terminal multiplexer is recommended for this project, but is not needed. Multi
   5. run `yarn`
   6. start the webserver (`yarn start`)
   7. start the webapp (`yarn start` in `../webapp`)
-  8. databaseSeed.csv is provided for use in the upload csv component to seed the database
+  8. transactionSeed.csv and employeeSeed.csv are provided for use in the upload csv component to seed the database
 
 Defaults (host: `localhost`, port `3000`)
 

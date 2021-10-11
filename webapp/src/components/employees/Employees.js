@@ -1,4 +1,3 @@
-/* esling-disable */
 import React, { useState, useEffect, Fragment } from 'react'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import GetUsers from '../../gql/users.gql'

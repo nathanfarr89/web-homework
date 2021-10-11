@@ -26,7 +26,7 @@ export function Charts () {
   if (data.transactions.length === 0) {
     return (
       <div>
-        <h2 css={warningStyle}>No Transactions Found. Please seed the database with upload function and the databaseSeed.csv file</h2>
+        <h2 css={warningStyle}>No Transactions Found. Please seed the database with upload function and the transactionSeed.csv file</h2>
       </div>
     )
   }
