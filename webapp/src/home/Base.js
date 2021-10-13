@@ -6,7 +6,6 @@ import { baseContainerStyle } from '../styles'
 
 export function Base () {
   const { data = {} } = useQuery(GetTransactions)
-  console.log('data', data)
 
   if (Object.keys(data).length === 0 || data.transactions.length === 0) {
     return (
