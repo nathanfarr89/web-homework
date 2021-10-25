@@ -8,7 +8,7 @@ const EmployeeCard = (props) => {
   if (!employeeData) return null
 
   return (
-    <div css={employeeCard}>
+    <div css={employeeCard} data-testid={`employee-${employeeData.id}`}>
       <h1>Employee Details</h1>
       <div css={employee}>
         <h2 css={profilePic}>{employeeData.firstName[0]}{employeeData.lastName[0]}</h2>

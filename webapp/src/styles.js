@@ -391,10 +391,9 @@ export const employeesContainer = css`
 export const employeeCard = css`
   display: flex;
   flex-direction: column;
-  max-height: 70vh;
+  max-height: 95vh;
   width: 40%;
   overflow: hidden;
-
 `
 
 export const employee = css`

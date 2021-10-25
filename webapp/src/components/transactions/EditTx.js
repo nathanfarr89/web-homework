@@ -66,14 +66,14 @@ const EditTx = (props) => {
 
   return (
     <div>
-      <form css={formStyle} onSubmit={onSubmit}>
+      <form css={formStyle} data-testid={`transaction-${formValues.id}`} onSubmit={onSubmit}>
         <h3 css={editHeaderStyle}>Edit Transaction</h3>
-        <ul css={txUlstyle} data-testid={`transaction-${formValues.id}`}>
+        <ul css={txUlstyle}>
           <li css={txLiStyle}>
             <label htmlFor='userId'>User ID:</label>
-            <select name='userId' onChange={event => setFormValues({ ...formValues, userId: event.target.value })}>
+            <select value={formValues.userId} name='userId' onChange={event => setFormValues({ ...formValues, userId: event.target.value })}>
               {options.map(option => {
-                return <option label={option} selected={(formValues.userId === option)} key={option} value={option} />
+                return <option label={option} key={option} value={option} />
               })}
             </select>
           </li>
@@ -87,9 +87,9 @@ const EditTx = (props) => {
           </li>
           <li css={txLiStyle}>
             <label htmlFor='Transaction Type'>Transaction:</label>
-            <select name='Transaction Type' onChange={event => setFormValues({ ...formValues, txType: event.target.value })}>
-              <option selected={(formValues.txType === 'debit')} value='debit' >Debit</option>
-              <option selected={(formValues.txType === 'credit')} value='credit' >Credit</option>
+            <select name='Transaction Type' onChange={event => setFormValues({ ...formValues, txType: event.target.value })} value={formValues.txType}>
+              <option value='debit' >Debit</option>
+              <option value='credit' >Credit</option>
             </select>
           </li>
           <li css={txLiStyle}>
@@ -111,6 +111,6 @@ export default EditTx
 EditTx.propTypes = {
   data: PropTypes.instanceOf(Object),
   editForm: PropTypes.instanceOf(Object),
-  setEditModal: PropTypes.func.isRequired,
-  setFilterValue: PropTypes.func.isRequired
+  setEditModal: PropTypes.func,
+  setFilterValue: PropTypes.func
 }
