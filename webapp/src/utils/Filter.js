@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { filterStyle } from '../styles'
 
 const Filter = (props) => {
-  const { data, setDisplayData } = props
+  const { data, filterValue, setDisplayData, setFilterValue } = props
 
   const filterByValue = (array, string) => {
     return array.filter(o =>
       Object.keys(o).some(k => o[k].toString().toLowerCase().includes(string.toLowerCase())))
   }
 
-  const filter = (e) => {
-    setDisplayData(filterByValue(data, e.target.value))
+  const filter = () => {
+    const filterData = filterByValue(data, filterValue)
+    setDisplayData(filterData)
   }
+
+  useEffect(() => {
+    filter()
+  }, [filterValue, data])
 
   return (
     <div css={filterStyle}>
@@ -22,9 +27,10 @@ const Filter = (props) => {
       <input
         id='header-search'
         name='s'
-        onChange={filter}
+        onChange={event => setFilterValue(event.target.value)}
         placeholder='Filter...'
         type='text'
+        value={filterValue}
       />
     </div>
   )
@@ -34,5 +40,7 @@ export default Filter
 
 Filter.propTypes = {
   data: PropTypes.instanceOf(Object).isRequired,
-  setDisplayData: PropTypes.func.isRequired
+  filterValue: PropTypes.string,
+  setDisplayData: PropTypes.func.isRequired,
+  setFilterValue: PropTypes.func.isRequired
 }

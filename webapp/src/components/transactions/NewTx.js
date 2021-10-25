@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { gql, useMutation, useQuery } from '@apollo/client'
-import GetUsers from '../../gql/users.gql'
 import { css } from '@emotion/core'
 import { Redirect } from 'react-router-dom'
 import GetTransactions from '../../gql/transactions.gql'
@@ -21,8 +20,7 @@ const headerStyle = css`
 `
 
 const NewTx = (props) => {
-  const { setAddModal } = props
-  const { data = {} } = useQuery(GetUsers)
+  const { data, setAddModal, setFilterValue } = props
   const [options, setOptions] = useState([])
   const [redirect, setRedirect] = useState(false)
   const [formValues, setFormValues] = useState({
@@ -45,6 +43,7 @@ const NewTx = (props) => {
     event.preventDefault()
 
     setAddModal(false)
+    setFilterValue(formValues.userId)
     addTransaction({ variables: { 'user_id': formValues.userId, 'description': formValues.description, 'merchant_id': formValues.merchantId, 'debit': (formValues.txType === 'debit'), 'credit': (formValues.txType === 'credit'), 'amount': formValues.amount }, refetchQueries: [{ query: GetTransactions }] }).then(() => setRedirect(true))
   }
 
@@ -61,7 +60,7 @@ const NewTx = (props) => {
             <label htmlFor='userId'>User ID:</label>
             <select name='userId' onChange={event => setFormValues({ ...formValues, userId: event.target.value })}>
               {options.map(option => {
-                return <option key={option}>{option}</option>
+                return <option key={option} label={option} />
               })}
             </select>
           </li>
@@ -82,7 +81,7 @@ const NewTx = (props) => {
           </li>
           <li css={txLiStyle}>
             <label htmlFor='amount'>Amount:</label>
-            <input css={inputStyle} name='amount' onChange={event => setFormValues({ ...formValues, amount: Number(event.target.value) })} type='number' value={formValues.amount} />
+            <input css={inputStyle} name='amount' onChange={event => setFormValues({ ...formValues, amount: Math.round(Number(event.target.value) * 100) / 100 })} step='0.01' type='number' value={Math.round(formValues.amount * 100) / 100} />
           </li>
           <li css={txLiStyle}>
             <button type='submit'>Submit</button>
@@ -97,5 +96,7 @@ const NewTx = (props) => {
 export default NewTx
 
 NewTx.propTypes = {
-  setAddModal: PropTypes.func.isRequired
+  data: PropTypes.instanceOf(Object),
+  setAddModal: PropTypes.func.isRequired,
+  setFilterValue: PropTypes.func.isRequired
 }

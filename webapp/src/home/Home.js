@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { PropTypes } from 'prop-types'
 import { useQuery } from '@apollo/client'
 import GetTransactions from '../gql/transactions.gql'
+import GetUsers from '../gql/users.gql'
 import TxTable from '../components/transactions/TxTable'
 
 export function Home (props) {
@@ -9,6 +10,7 @@ export function Home (props) {
   const emptyParams = Object.keys(match.params).length === 0 && match.params.constructor === Object
   const version = (emptyParams || match.params.version === 'standard') ? 'standard' : 'roman'
   const { loading, error, data = {} } = useQuery(GetTransactions)
+  const userData = useQuery(GetUsers)
 
   if (loading) {
     return (
@@ -28,7 +30,7 @@ export function Home (props) {
 
   return (
     <Fragment>
-      <TxTable data={data.transactions} version={version} />
+      <TxTable data={data.transactions} userData={userData} version={version} />
     </Fragment>
   )
 }

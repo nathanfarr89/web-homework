@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { arrayOf, string, bool, number, shape } from 'prop-types'
+import { arrayOf, string, bool, number, shape, PropTypes } from 'prop-types'
 import GetTransactions from '../../gql/transactions.gql'
-import GetUsers from '../../gql/users.gql'
 import AddIcon from '@material-ui/icons/Add'
 import CheckIcon from '@material-ui/icons/Check'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import EditIcon from '@material-ui/icons/Edit'
-import { gql, useMutation, useQuery } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import NewTx from './NewTx'
 import EditTx from './EditTx'
 import { Filter, RomanConversion } from '../../utils'
@@ -23,13 +22,13 @@ export const RemoveTransaction = gql`
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
 const TxTable = (props) => {
-  const { data } = props
-  const userData = useQuery(GetUsers)
+  const { data, userData } = props
   const [displayData, setDisplayData] = useState(data)
   const [editForm, setEditForm] = useState({})
   const [addModal, setAddModal] = useState(false)
   const [editModal, setEditModal] = useState(false)
   const [showDeleted, setShowDeleted] = useState(false)
+  const [filterValue, setFilterValue] = useState('')
   const [removeTransaction] = useMutation(RemoveTransaction)
   const [currencyType, setCurrencyType] = useState(true)
 
@@ -62,7 +61,7 @@ const TxTable = (props) => {
     if (data.length === 0) {
       setShowDeleted(false)
     }
-  }, [data])
+  }, [])
 
   if (!userData.data || data.length === 0) {
     return (
@@ -78,7 +77,7 @@ const TxTable = (props) => {
         Company Expenses
         <button css={[tableButtonStyle, (userData.data.users.length > 0) ? enableTableButtonStyle : disableTableButtonStyle]} onClick={showAddModal}><AddIcon /></button>
       </h1>
-      <Filter data={data} setDisplayData={setDisplayData} />
+      <Filter data={data} filterValue={filterValue} setDisplayData={setDisplayData} setFilterValue={setFilterValue} />
       {showDeleted &&
         (
           <div css={[alert, alertSuccess]}>
@@ -101,8 +100,8 @@ const TxTable = (props) => {
           </div>
         )
       }
-      {(addModal && userData.data.users.length > 0) && <NewTx setAddModal={setAddModal} />}
-      {(editModal && userData.data.users.length > 0) && <EditTx editForm={editForm} setEditModal={setEditModal} />}
+      {(addModal && userData.data.users.length > 0) && <NewTx data={userData.data} setAddModal={setAddModal} setFilterValue={setFilterValue} />}
+      {(editModal && userData.data.users.length > 0) && <EditTx data={userData.data} editForm={editForm} setEditModal={setEditModal} setFilterValue={setFilterValue} />}
       {(displayData.length > 0) &&
         (
           <div>
@@ -172,5 +171,6 @@ TxTable.propTypes = {
     debit: bool,
     credit: bool,
     amount: number
-  }))
+  })),
+  userData: PropTypes.instanceOf(Object)
 }

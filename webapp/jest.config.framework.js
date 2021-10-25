@@ -1,2 +1,2 @@
 require('jest-chain');
-require('jest-dom/extend-expect');
+// require('jest-dom/extend-expect');

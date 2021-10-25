@@ -1,3 +1,4 @@
+import {jest} from '@jest/globals'
 require('jest-expect-message');
 require('babel-polyfill');
 const jsdom = require('jsdom');

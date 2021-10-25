@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import GetUsers from '../../gql/users.gql'
-import EmployeeCard from './EmployeeCard'
+import EmployeeCard from './employeeCard'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import { alert, alertSuccess, closeBtn, employeesContainer, styles, tableContainerStyle, tableHeaderStyle, tableIconStyle, warningStyle } from '../../styles'
 

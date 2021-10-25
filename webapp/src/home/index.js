@@ -1,2 +1,2 @@
-export { Home } from './home-page'
+export { Home } from './Home'
 export { Base } from './Base'

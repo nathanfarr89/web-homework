@@ -1,9 +1,8 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { gql, useMutation, useQuery } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import GetTransactions from '../../gql/transactions.gql'
-import GetUsers from '../../gql/users.gql'
 import { Redirect } from 'react-router-dom'
 import { formStyle, editHeaderStyle, inputStyle, txLiStyle, txUlstyle } from '../../styles'
 
@@ -22,8 +21,7 @@ const EditTransaction = gql`
   `
 
 const EditTx = (props) => {
-  const { editForm, setEditModal } = props
-  const { data = {} } = useQuery(GetUsers)
+  const { data, editForm, setEditModal, setFilterValue } = props
   const [options, setOptions] = useState([])
   const [formValues, setFormValues] = useState({
     id: '',
@@ -33,13 +31,13 @@ const EditTx = (props) => {
     txType: 'debit',
     amount: 0
   })
-  console.log('formVals', formValues)
   const [redirect, setRedirect] = useState(false)
   const [editTransaction] = useMutation(EditTransaction)
 
   const onSubmit = (event) => {
     event.preventDefault()
     setEditModal(false)
+    setFilterValue(formValues.userId)
     editTransaction({ variables: { 'id': formValues.id, 'user_id': formValues.userId, 'description': formValues.description, 'merchant_id': formValues.merchantId, 'debit': (formValues.txType === 'debit'), 'credit': (formValues.txType === 'credit'), 'amount': formValues.amount }, refetchQueries: [{ query: GetTransactions }] }).then(() => setRedirect(true))
   }
 
@@ -70,12 +68,12 @@ const EditTx = (props) => {
     <div>
       <form css={formStyle} onSubmit={onSubmit}>
         <h3 css={editHeaderStyle}>Edit Transaction</h3>
-        <ul css={txUlstyle}>
+        <ul css={txUlstyle} data-testid={`transaction-${formValues.id}`}>
           <li css={txLiStyle}>
             <label htmlFor='userId'>User ID:</label>
             <select name='userId' onChange={event => setFormValues({ ...formValues, userId: event.target.value })}>
               {options.map(option => {
-                return <option selected={(formValues.userId === option)} key={option}>{option}</option>
+                return <option label={option} selected={(formValues.userId === option)} key={option} value={option} />
               })}
             </select>
           </li>
@@ -96,7 +94,7 @@ const EditTx = (props) => {
           </li>
           <li css={txLiStyle}>
             <label htmlFor='amount'>Amount:</label>
-            <input css={inputStyle} name='amount' onChange={event => setFormValues({ ...formValues, amount: Number(event.target.value) })} type='number' value={formValues.amount} />
+            <input css={inputStyle} name='amount' onChange={event => setFormValues({ ...formValues, amount: Math.round(Number(event.target.value) * 100) / 100 })} pattern="^\d+(?:\.\d{1,2})?$" step="0.01" type='number' value={Math.round(formValues.amount * 100) / 100} />
           </li>
           <li css={txLiStyle}>
             <button type='submit'>Submit</button>
@@ -111,6 +109,8 @@ const EditTx = (props) => {
 export default EditTx
 
 EditTx.propTypes = {
+  data: PropTypes.instanceOf(Object),
   editForm: PropTypes.instanceOf(Object),
-  setEditModal: PropTypes.func.isRequired
+  setEditModal: PropTypes.func.isRequired,
+  setFilterValue: PropTypes.func.isRequired
 }
