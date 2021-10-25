@@ -14,15 +14,15 @@ const romanNumerals = [
   [1, 'I']
 ]
 
-const RomanConversion = (num) => {
+const convertToRomanNumerals = (num) => {
   if (num === 0) {
     return ''
   }
   for (var i = 0; i < romanNumerals.length; i++) {
     if (num >= romanNumerals[i][0]) {
-      return romanNumerals[i][1] + RomanConversion(num - romanNumerals[i][0])
+      return romanNumerals[i][1] + convertToRomanNumerals(num - romanNumerals[i][0])
     }
   }
 }
 
-export default RomanConversion
+export default convertToRomanNumerals

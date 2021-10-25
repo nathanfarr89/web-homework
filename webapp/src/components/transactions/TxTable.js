@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import { gql, useMutation } from '@apollo/client'
 import NewTx from './NewTx'
 import EditTx from './EditTx'
-import { Filter, RomanConversion } from '../../utils'
+import { Filter, convertToRomanNumerals } from '../../utils'
 import { alert, alertSuccess, alertFailure, closeBtn, checkboxStyle, creditStyle, debitStyle, disableTableButtonStyle, enableTableButtonStyle, fragmentStyle, styles, tableButtonStyle, tableContainerStyle, tableHeaderStyle, tableIconStyle, warningStyle } from '../../styles'
 
 export const RemoveTransaction = gql`
@@ -132,7 +132,7 @@ const TxTable = (props) => {
                           <td data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
                           <td css={debitStyle} data-testid={makeDataTestId(id, 'debit')}>{(debit && <CheckIcon />)}</td>
                           <td css={creditStyle} data-testid={makeDataTestId(id, 'credit')}>{(credit && <CheckIcon />)}</td>
-                          <td css={(debit) ? debitStyle : creditStyle} data-testid={makeDataTestId(id, 'amount')}>{(!currencyType) ? RomanConversion(Math.round(amount)) : amount}</td>
+                          <td css={(debit) ? debitStyle : creditStyle} data-testid={makeDataTestId(id, 'amount')}>{(!currencyType) ? convertToRomanNumerals(Math.round(amount)) : amount}</td>
                           <td>
                             <button onClick={() => showEditModal(id, userId, description, merchantId, debit, credit, amount)}>
                               {(userData.data.users.length > 0) ? <EditIcon /> : <span>N/A</span>}

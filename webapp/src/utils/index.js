@@ -1,4 +1,4 @@
 import Filter from './Filter'
-import RomanConversion from './RomanConversion'
+import convertToRomanNumerals from './ConvertToRomanNumerals'
 
-export { Filter, RomanConversion }
+export { Filter, convertToRomanNumerals }
