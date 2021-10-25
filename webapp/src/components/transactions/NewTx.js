@@ -34,14 +34,15 @@ const NewTx = (props) => {
 
   useEffect(() => {
     if (data.users) {
-      setFormValues({ ...formValues, userId: data.users[0].employeeNumber})
       setOptions(data.users.map(user => user.employeeNumber))
     }
   }, [data])
 
   const onSubmit = (event) => {
     event.preventDefault()
-
+    if (formValues.userId === '') {
+      return alert('Please select an employee')
+    }
     setAddModal(false)
     setFilterValue(formValues.userId)
     addTransaction({ variables: { 'user_id': formValues.userId, 'description': formValues.description, 'merchant_id': formValues.merchantId, 'debit': (formValues.txType === 'debit'), 'credit': (formValues.txType === 'credit'), 'amount': formValues.amount }, refetchQueries: [{ query: GetTransactions }] }).then(() => setRedirect(true))
@@ -58,9 +59,10 @@ const NewTx = (props) => {
         <ul css={txUlstyle}>
           <li css={txLiStyle}>
             <label htmlFor='userId'>User ID:</label>
-            <select name='userId' onChange={event => setFormValues({ ...formValues, userId: event.target.value })}>
+            <select name='userId' onChange={event => setFormValues({ ...formValues, userId: event.target.value })} value="DEFAULT">
+              <option value="DEFAULT" disabled>Select an employee...</option>
               {options.map(option => {
-                return <option key={option} label={option} />
+                return <option key={option} label={option} value={option} />
               })}
             </select>
           </li>
