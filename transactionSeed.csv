@@ -3,19 +3,24 @@ employee2,Travel,Delta,TRUE,FALSE,235
 employee10,Travel,American,TRUE,FALSE,300
 employee23,Travel,Spirit,TRUE,FALSE,135
 employee27,Travel,Air France,TRUE,FALSE,440
+employee20,Travel,Jet Blue,FALSE,TRUE,340.44
 employee45,Travel,Greyhound,TRUE,FALSE,95
 employee2,Hotel,Holiday Inn,FALSE,TRUE,100
 employee10,Hotel,Marriot,TRUE,FALSE,140
 employee23,Hotel,Hyatt,FALSE,TRUE,220
 employee27,Hotel,Hilton,FALSE,TRUE,330
 employee45,Hotel,Embassy,TRUE,FALSE,175
+employee44,Hotel,Marriot,FALSE,TRUE,444.44
 employee2,Food,Starbucks,FALSE,TRUE,20
 employee10,Food,Five Guys,TRUE,FALSE,30
 employee23,Food,Taco Bell,FALSE,TRUE,12
 employee27,Food,Ruth's Chris,FALSE,TRUE,200
 employee45,Food,Lucky 13,TRUE,FALSE,25
+employee13,Food,Whataburger,FALSE,TRUE,14.13
 employee2,Entertainment,Smith's Tix,FALSE,TRUE,140
 employee10,Entertainment,Smith's Tix,FALSE,TRUE,140
 employee23,Entertainment,Megaplex,TRUE,FALSE,30
 employee27,Entertainment,Megaplex,TRUE,FALSE,30
 employee45,Entertainment,Megaplex,TRUE,FALSE,30
+employee00,Entertainment,Cinemark,FALSE,TRUE,25.60
+employee8,Entertainment,Cinemark,FALSE,TRUE,22.34
