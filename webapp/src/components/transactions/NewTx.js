@@ -1,7 +1,7 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { gql, useMutation, useQuery } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import { css } from '@emotion/core'
 import { Redirect } from 'react-router-dom'
 import GetTransactions from '../../gql/transactions.gql'
@@ -31,6 +31,21 @@ const NewTx = (props) => {
     amount: 0
   })
   const [addTransaction] = useMutation(AddTransaction)
+  const ref = useRef()
+
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if (close && ref.current && !ref.current.contains(e.target)) {
+        setAddModal(false)
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', checkIfClickedOutside)
+    }
+  }, [])
 
   useEffect(() => {
     if (data.users) {
@@ -53,7 +68,7 @@ const NewTx = (props) => {
   }
 
   return (
-    <div>
+    <div ref={ref}>
       <form css={formStyle} onSubmit={onSubmit}>
         <h3 css={headerStyle}>Add Transaction</h3>
         <ul css={txUlstyle}>

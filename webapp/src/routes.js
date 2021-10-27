@@ -11,7 +11,7 @@ import PeopleIcon from '@material-ui/icons/People'
 import PieChartIcon from '@material-ui/icons/PieChart'
 import PublishIcon from '@material-ui/icons/Publish'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
-import { buttonContainer, buttonStyle, containerStyle, contentStyle, headerStyle, iconStyle, sidebarStyle, uploadStyle } from './styles'
+import { buttonContainer, buttonStyle, containerStyle, contentStyle, headerStyle, iconStyle, sideBarSelection, sidebarStyle, uploadStyle } from './styles'
 
 const AppRouter = () => {
   const [showUpload, setShowUpload] = useState(false)
@@ -29,7 +29,7 @@ const AppRouter = () => {
             </Link>
           </h1>
           <Link
-            css={buttonStyle}
+            css={[buttonStyle, sideBarSelection]}
             to='/transactions/standard'
           >
             <div css={buttonContainer}>
@@ -38,7 +38,7 @@ const AppRouter = () => {
             </div>
           </Link>
           <Link
-            css={buttonStyle}
+            css={[buttonStyle, sideBarSelection]}
             to='/charts'
           >
             <div css={buttonContainer}>
@@ -47,7 +47,7 @@ const AppRouter = () => {
             </div>
           </Link>
           <Link
-            css={buttonStyle}
+            css={[buttonStyle, sideBarSelection]}
             to='/employees'
           >
             <div css={buttonContainer}>
@@ -56,7 +56,7 @@ const AppRouter = () => {
             </div>
           </Link>
           <button
-            css={[buttonStyle, uploadStyle]}
+            css={[buttonStyle, sideBarSelection, uploadStyle]}
             onClick={() => setShowUpload(!showUpload)}
           >
             <div css={buttonContainer}>

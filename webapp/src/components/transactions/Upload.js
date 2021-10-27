@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { CSVReader } from 'react-papaparse'
 import { gql, useMutation } from '@apollo/client'
@@ -30,6 +30,22 @@ const Upload = (props) => {
   const [addUser] = useMutation(AddUser)
   const [error, setError] = useState(false)
   const [submitType, setSubmitType] = useState('transactions')
+
+  const ref = useRef()
+
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if (close && ref.current && !ref.current.contains(e.target)) {
+        close(false)
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', checkIfClickedOutside)
+    }
+  }, [close])
 
   const handleOpenDialog = (e) => {
     if (buttonRef.current) {
@@ -72,7 +88,7 @@ const Upload = (props) => {
   }
 
   return (
-    <div css={uploadContainerStyle}>
+    <div css={uploadContainerStyle} ref={ref}>
       <button css={uploadCloseStyle} onClick={() => close(false)}>x</button>
       <h3 css={uploadHeaderStyle}>Upload CSV</h3>
       <CSVReader

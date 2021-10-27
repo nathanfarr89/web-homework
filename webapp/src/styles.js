@@ -81,6 +81,14 @@ export const buttonStyle = css`
   margin-bottom: 20px;
   padding: 10px;
 `
+
+export const sideBarSelection = css`
+  &:hover {
+    background-color: ${blue};
+    color: ${white};
+  }
+`
+
 export const iconStyle = css`
   margin-right: 5px;
 `

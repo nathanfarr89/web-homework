@@ -3,7 +3,18 @@ import PropTypes from 'prop-types'
 import { employee, employeeCard, profilePic } from '../../styles'
 
 const EmployeeCard = (props) => {
-  const { employeeData } = props
+  const { employeeData, transactions } = props
+
+  const getRemainingBudget = (budget) => {
+    let total = 0
+    transactions.transactions.map(transaction => {
+      if (transaction.user_id === employeeData.employeeNumber) {
+        transaction.debit ? total += transaction.amount : total -= transaction.amount
+      }
+    })
+
+    return parseInt(budget) + total
+  }
 
   if (!employeeData) return null
 
@@ -15,7 +26,7 @@ const EmployeeCard = (props) => {
         <p>{employeeData.firstName} {employeeData.lastName}</p>
         <p>ID: {employeeData.employeeNumber}</p>
         <p>Years of Service: {employeeData.tenure}</p>
-        <p>Annual Budget: {employeeData.budget}</p>
+        <p>Remaining Budget: ${getRemainingBudget(employeeData.budget)}</p>
       </div>
     </div>
   )
@@ -24,5 +35,6 @@ const EmployeeCard = (props) => {
 export default EmployeeCard
 
 EmployeeCard.propTypes = {
-  employeeData: PropTypes.instanceOf(Object)
+  employeeData: PropTypes.instanceOf(Object),
+  transactions: PropTypes.instanceOf(Object)
 }

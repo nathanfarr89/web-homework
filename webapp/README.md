@@ -1,5 +1,19 @@
 # Divvy Front End Homework Instructions
 
+**10/26 Updates**
+
+1. Added tests
+2. Revised naming conventions
+3. After adding or editing a transaction, table will automatically filter for that user. 
+4. Transaction amount now accepts cents
+5. Clicking outside of upload, add, and edit modals will close the respective modals. Added label prop to dropdown options
+6. Added hover effect to sidebar menu options
+7. Debits and credits are reflected in the employee's remaining budget on the employee card in the directory
+
+**---**
+
+<br />
+
 Instructions for the front end assignment.
 
 This is the completed boilerplate for a basic React application, with 

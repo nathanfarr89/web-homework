@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { gql, useMutation } from '@apollo/client'
 import GetTransactions from '../../gql/transactions.gql'
@@ -33,6 +33,21 @@ const EditTx = (props) => {
   })
   const [redirect, setRedirect] = useState(false)
   const [editTransaction] = useMutation(EditTransaction)
+  const ref = useRef()
+
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if (close && ref.current && !ref.current.contains(e.target)) {
+        setEditModal(false)
+      }
+    }
+
+    document.addEventListener('mousedown', checkIfClickedOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', checkIfClickedOutside)
+    }
+  }, [])
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -65,7 +80,7 @@ const EditTx = (props) => {
   }
 
   return (
-    <div>
+    <div ref={ref}>
       <form css={formStyle} data-testid={`transaction-${formValues.id}`} onSubmit={onSubmit}>
         <h3 css={editHeaderStyle}>Edit Transaction</h3>
         <ul css={txUlstyle}>
